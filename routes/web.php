@@ -2,10 +2,10 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilController;
+use App\Http\Controllers\CompanyController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EstudanteController;
 
-Route::get('/estudantes', [EstudanteController::class, 'index'])->name('estudantes.index');
+
 
 
 Route::get('/', [UtilController::class, 'home'])->name('home');
@@ -23,7 +23,10 @@ Route::get('/welcome/{name}', function ($name) {
 });
 
 Route::get('/add-users', [UserController::class, 'addUser'])->name('users.add');
-
+Route::get('/all-users', [UserController::class, 'listUsers'])->name('users.all');
+Route::get('/seed-demo-user', [UserController::class, 'seedDemoUser'])->name('users.seed');
+Route::get('/company', [CompanyController::class, 'index'])->name('company.index');
+Route::get('/tasks', [UtilController::class, 'allTasks'])->name('tasks.all');
 
 Route::fallback( function(){
     return '<h5>Ups, essa página não existe</h5>';
