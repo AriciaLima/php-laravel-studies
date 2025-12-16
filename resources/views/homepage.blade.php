@@ -15,5 +15,6 @@
         <li><a href="{{ route('welcome') }}">Welcome Page</a></li>
         <li><a href="{{ route('hello') }}">Hello Page</a></li>
         <li><a href="{{ route('users.add') }}">Adicionar USer</a></li>
+        <li><a href="{{ route('estudantes.index') }}">Todos os Estudantes</a></li>
     </ul>
 @endsection
