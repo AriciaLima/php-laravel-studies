@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilController;
-use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -22,11 +22,12 @@ Route::get('/welcome/{name}', function ($name) {
     return "<h1>Bem Vindo $name</h1>";
 });
 
+//rotas de users
 Route::get('/add-users', [UserController::class, 'addUser'])->name('users.add');
 Route::get('/all-users', [UserController::class, 'listUsers'])->name('users.all');
-Route::get('/seed-demo-user', [UserController::class, 'seedDemoUser'])->name('users.seed');
-Route::get('/company', [CompanyController::class, 'index'])->name('company.index');
-Route::get('/tasks', [UtilController::class, 'allTasks'])->name('tasks.all');
+
+//rota de tasks
+Route::get('/tasks', [TaskController::class, 'allTasks'])->name('tasks.all');
 
 Route::fallback( function(){
     return '<h5>Ups, essa página não existe</h5>';

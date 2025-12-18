@@ -15,12 +15,10 @@ class UserController extends Controller
     }
 
     public function listUsers(){
-        $usersThatWillComeFromDB = ['Manuela', 'Vítor', 'Alexandre', 'Bruno'];
-
         $usersFromDB = DB::table('users')->get();
 
 
-        return view('users.all_users', compact('usersThatWillComeFromDB', 'usersFromDB'));
+        return view('users.all_users', compact('usersFromDB'));
     }
 
     private function getAllUsers(){
