@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -15,10 +16,76 @@ class UserController extends Controller
     }
 
     public function listUsers(){
-        $usersFromDB = DB::table('users')->get();
+        $usersThatWillComeFromDB = ['Manuela', 'Vítor', 'Alexandre', 'Bruno'];
+
+       $usersFromDB = User::get();
 
 
-        return view('users.all_users', compact('usersFromDB'));
+        return view('users.all_users', compact('usersThatWillComeFromDB', 'usersFromDB'));
+    }
+
+    public function viewUser($id){
+        //carregar uma nova view
+        //com os dados do user onde estamos a clicar
+        $user = User::where('id', $id)->first();
+
+        return view('users.view_user', compact('user'));
+
+    }
+
+    public function deleteUser($id){
+
+        //se tiver tasks associadas, apaga
+        Db::table('tasks')
+        ->where('user_id', $id)
+        ->delete();
+
+
+        DB::table('users')
+        ->where('id', $id)
+        ->delete();
+
+
+        return back();
+
+    }
+
+    //função que recebe os dados do form
+    public function storeUser(Request $request){
+        //dd($request->all());
+        //validar se os dados recebidos estão em conformidade com a BAse de dados
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:users|email',
+            'password' =>'min:8|required'
+        ]);
+
+        //inserir user na base de dados
+        User::insert([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('users.all')->with('message', 'User adicionado com sucesso!');
+    }
+
+    public function updateUser(Request $request){
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        DB::table('users')
+        ->where('id', $request->id)
+        ->update([
+            'name' =>$request->name,
+            'address' =>$request->address,
+            'nif' =>$request->nif,
+            'updated_at'=> now()
+        ]);
+
+        return redirect()->route('users.all')->with('message', 'User actualizado com sucesso!');
+
     }
 
     private function getAllUsers(){
@@ -28,19 +95,21 @@ class UserController extends Controller
         return $users;
     }
 
+
+
     private function insertUserIntoDB(){
 
-        DB::table('users')->updateOrInsert(
+        DB::table('users')->updateOrinsert(
             ['email' =>'teste1@gmail.com'],
             [
             'name' =>'Sara',
             'updated_at'=>now(),
-            'password' => Hash::make('1234444')
+            'password' => '1234444'
         ]);
     }
 
     private function deleteUserFromDB(){
-        DB::table('users')
+        Db::table('users')
         ->where('id',4)
         ->delete();
 
