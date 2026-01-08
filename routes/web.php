@@ -88,10 +88,6 @@ Route::get('/tasks', [TaskController::class, 'allTasks'])
 Route::get('/task/{id}', [TaskController::class, 'viewTask'])
     ->name('tasks.view');
 
-# Mostra o formulário de edição da task
-Route::get('/task/{id}/edit', [TaskController::class, 'editTask'])
-    ->name('tasks.edit');
-
 # Atualiza os dados de uma task
 Route::put('/task/{id}', [TaskController::class, 'updateTask'])
     ->name('tasks.update');

@@ -35,14 +35,6 @@ class TaskController extends Controller
         return view('tasks.view_task', compact('task'));
     }
 
-    public function editTask($id)
-    {
-        $task = DB::table('tasks')->where('id', $id)->first();
-        abort_if(!$task, 404);
-
-        return view('tasks.edit_task', compact('task'));
-    }
-
     public function updateTask(Request $request, $id)
     {
         $validated = $request->validate([
@@ -64,8 +56,8 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.view', $id)->with('status', 'Tarefa atualizada com sucesso.');
     }
-    
- public function addTask()
+
+    public function addTask()
 {
     $users = DB::table('users')->get();
 
