@@ -1,50 +1,112 @@
 <?php
 
-use App\Http\Controllers\TaskController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UtilController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UtilController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TaskController;
+
+/*
+|--------------------------------------------------------------------------
+| Rotas gerais e páginas simples
+|--------------------------------------------------------------------------
+| Rotas que não pertencem a nenhum domínio específico
+| Servem para testes, páginas iniciais ou exemplos
+*/
 
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
 Route::get('/hello', function () {
-    return "<h1>Olá Mundo</h1>";
+    return '<h1>Olá Mundo</h1>';
 })->name('hello');
-
-Route::get('/home', [UtilController::class, 'home']);
 
 Route::get('/welcome/{name}', function ($name) {
     return "<h1>Bem Vindo $name</h1>";
 });
 
-//rotas de users
+/*
+|--------------------------------------------------------------------------
+| Home da aplicação
+|--------------------------------------------------------------------------
+| Página principal do site
+*/
 
-//rota que mostra o form para inserir users (GET)
-Route::get('/add-users', [UserController::class, 'addUser'])->name('users.add');
+Route::get('/home', [UtilController::class, 'home'])->name('home');
 
-//rota de post que pega nos dados do user e envia para o backend/servidor
-Route::post('/store-user',[UserController::class, 'storeUser'])->name('users.store');
+/*
+|--------------------------------------------------------------------------
+| Rotas de Users
+|--------------------------------------------------------------------------
+| Todas as ações relacionadas com utilizadores
+*/
 
-Route::get('/all-users',[UserController::class, 'listUsers'])->name('users.all');
-Route::get('/user/{id}', [UserController::class, 'viewUser'])->name('users.view');
-Route::get('/delete-user/{id}', [UserController::class, 'deleteUser'])->name('users.delete');
-Route::put('/update-users', [UserController::class, 'updateUser'])->name('users.update');
+# Mostra o formulário para criar um novo user
+Route::get('/add-users', [UserController::class, 'addUser'])
+    ->name('users.add');
 
+# Recebe os dados do formulário e guarda o user
+Route::post('/store-user', [UserController::class, 'storeUser'])
+    ->name('users.store');
 
-//rotas de tasks
-Route::get('/add-task', [TaskController::class, 'addTask'])->name('tasks.add');
+# Lista todos os users
+Route::get('/all-users', [UserController::class, 'listUsers'])
+    ->name('users.all');
 
-//rota de post que pega nos dados do user e envia para o backend/servidor
-Route::post('/store-task',[TaskController::class, 'storeTask'])->name('tasks.store');
+# Mostra os dados de um user específico
+Route::get('/user/{id}', [UserController::class, 'viewUser'])
+    ->name('users.view');
 
-Route::get('/tasks', [TaskController::class, 'allTasks'])->name('tasks.all');
+# Atualiza os dados de um user existente
+Route::put('/update-users', [UserController::class, 'updateUser'])
+    ->name('users.update');
 
-Route::get('/task/{id}', [TaskController::class, 'viewTask'])->name('tasks.view');
-Route::get('/delete-task/{id}', [TaskController::class, 'deleteTask'])->name('tasks.delete');
+# Apaga um user
+Route::get('/delete-user/{id}', [UserController::class, 'deleteUser'])
+    ->name('users.delete');
 
+/*
+|--------------------------------------------------------------------------
+| Rotas de Tasks
+|--------------------------------------------------------------------------
+| Todas as ações relacionadas com tarefas
+*/
 
-Route::fallback( function(){
+# Mostra o formulário para criar uma task
+Route::get('/add-task', [TaskController::class, 'addTask'])
+    ->name('tasks.add');
+
+# Recebe os dados do formulário e guarda a task
+Route::post('/store-task', [TaskController::class, 'storeTask'])
+    ->name('tasks.store');
+
+# Lista todas as tasks
+Route::get('/tasks', [TaskController::class, 'allTasks'])
+    ->name('tasks.all');
+
+# Mostra uma task específica
+Route::get('/task/{id}', [TaskController::class, 'viewTask'])
+    ->name('tasks.view');
+
+# Mostra o formulário de edição da task
+Route::get('/task/{id}/edit', [TaskController::class, 'editTask'])
+    ->name('tasks.edit');
+
+# Atualiza os dados de uma task
+Route::put('/task/{id}', [TaskController::class, 'updateTask'])
+    ->name('tasks.update');
+
+# Apaga uma task
+Route::get('/delete-task/{id}', [TaskController::class, 'deleteTask'])
+    ->name('tasks.delete');
+
+/*
+|--------------------------------------------------------------------------
+| Fallback
+|--------------------------------------------------------------------------
+| Executado quando nenhuma rota é encontrada
+*/
+
+Route::fallback(function () {
     return '<h5>Ups, essa página não existe</h5>';
 });
