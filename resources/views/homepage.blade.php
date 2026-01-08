@@ -4,9 +4,13 @@
 
     {{-- Mensagem de boas vindas --}}
     @auth
-        <h5>Olá, {{ Auth::user()->name }}</h5>
+    <h5>Olá, {{ Auth::user()->name }}</h5>
     @endauth
-   
+
+    {{-- Dados do utilizador --}}
+    @isset($userData)
+        <p>{{ $userData['name'] }} - {{ $userData['age'] }}</p>
+    @endisset
 
     {{-- Informação institucional --}}
     @isset($cesaeInfo)
@@ -48,6 +52,9 @@
 
         <li>
             <a href="{{ route('tasks.all') }}">Todas as Tarefas</a>
+        </li>
+        <li>
+            <a href="{{ route('dashboard') }}">Todas as Tarefas</a>
         </li>
     </ul>
 
