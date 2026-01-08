@@ -3,16 +3,10 @@
 @section('content')
 
     {{-- Mensagem de boas vindas --}}
-    @isset($myName)
-        <h5>Bem vindo {{ $myName }}</h5>
-    @else
-        <h1>Caro utilizador, faça login</h1>
-    @endisset
-
-    {{-- Dados do utilizador --}}
-    @isset($userData)
-        <p>{{ $userData['name'] }} - {{ $userData['age'] }}</p>
-    @endisset
+    @auth
+        <h5>Olá, {{ Auth::user()->name }}</h5>
+    @endauth
+   
 
     {{-- Informação institucional --}}
     @isset($cesaeInfo)

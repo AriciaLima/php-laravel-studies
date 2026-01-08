@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UtilController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +96,25 @@ Route::put('/task/{id}', [TaskController::class, 'updateTask'])
 # Apaga uma task
 Route::get('/delete-task/{id}', [TaskController::class, 'deleteTask'])
     ->name('tasks.delete');
+
+/*
+|--------------------------------------------------------------------------
+| Rotas de Autenticação
+|--------------------------------------------------------------------------
+| Login, Logout e Registo
+*/
+
+Route::get('/login', [AuthController::class, 'showLogin'])
+    ->name('login')
+    ->middleware('guest');
+
+Route::post('/login', [AuthController::class, 'login'])
+    ->name('login.submit')
+    ->middleware('guest');
+
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->name('logout')
+    ->middleware('auth');
 
 /*
 |--------------------------------------------------------------------------
