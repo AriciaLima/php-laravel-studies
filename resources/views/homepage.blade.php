@@ -30,32 +30,14 @@
 
     {{-- Navegação principal --}}
     <ul>
-        <li>
-            <a href="{{ route('welcome') }}">Welcome Page</a>
-        </li>
-
-        <li>
-            <a href="{{ route('hello') }}">Hello Page</a>
-        </li>
-
-        <li>
-            <a href="{{ route('users.add') }}">Adicionar User</a>
-        </li>
-
-        <li>
-            <a href="{{ route('users.all') }}">Todos os Users</a>
-        </li>
-
-        <li>
-            <a href="{{ route('tasks.add') }}">Adicionar Tarefa</a>
-        </li>
-
-        <li>
-            <a href="{{ route('tasks.all') }}">Todas as Tarefas</a>
-        </li>
-        <li>
-            <a href="{{ route('dashboard') }}">Todas as Tarefas</a>
-        </li>
+        <li><a href="{{ route('welcome') }}">Welcome Page</a></li>
+        <li><a href="{{ route('hello') }}">Hello Page</a></li>
+        <li><a href="{{ route('users.add') }}">Adicionar User</a></li>
+        <li><a href="{{ route('users.all') }}">Todos os Users</a></li>
+        <li><a href="{{ route('tasks.add') }}">Adicionar Tarefa</a></li>
+         <li><a href="{{ route('tasks.all') }}">Todas as Tarefas</a></li>
+        <li><a href="{{ route('dashboard') }}">Todas as Tarefas</a></li>
     </ul>
+
 
 @endsection
