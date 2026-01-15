@@ -54,7 +54,6 @@
                             Criar conta aqui
                         </a>
                     </p>
-        
                     <p>Esqueceu a palavra-passe? <a href="{{ route('password.request') }}"
                             class="text-indigo-600 hover:text-indigo-700 font-medium">Recuperar aqui</a></p>
                 </div>

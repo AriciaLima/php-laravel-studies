@@ -1,10 +1,25 @@
 @extends('layouts.fe_master')
 
 @section('content')
-    <h5>Aqui vamos ver os dados do user {{ $user->name }}</h5>
-
     <form method="POST" action="{{ route('users.update') }}">
         @csrf
+         <div class="mb-3">
+        <label for="photo" class="form-label">Photo</label>
+        <input
+            type="file"
+            name="photo"
+            id="photo"
+            class="form-control"
+            accept="image/*"
+        >
+
+        @error('photo')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+     <button type="submit" class="btn btn-primary">
+        Atualizar
+    </button>
         @method('PUT')
         <input type="hidden" name="id" value="{{ $user->id }}">
         <div class="mb-3">
