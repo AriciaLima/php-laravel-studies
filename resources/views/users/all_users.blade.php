@@ -10,9 +10,10 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
+                <th scope="col">Foto</th>
                 <th scope="col">Email</th>
                 <th scope="col">Nif</th>
-                <th></th>
+                
                 <th></th>
             </tr>
         </thead>
@@ -20,8 +21,8 @@
             @foreach ($usersFromDB as $user)
                 <tr>
                     <th scope="row">{{ $user->id }}</th>
-                    <td><img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('images/nophoto.jpeg') }}" alt="User Photo" width="50" height="50"></td>
                     <td>{{ $user->name }}</td>
+                    <td><img src="{{ $user->photo ? asset('storage/'.$user->photo)  : asset('images/nophoto.jpeg') }}" alt="" width="50" height="50"></td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->nif }}</td>
                     @auth

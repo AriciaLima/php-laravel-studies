@@ -1,25 +1,19 @@
 @extends('layouts.fe_master')
 
 @section('content')
-    <form method="POST" action="{{ route('users.update') }}">
+    <form method="POST" action="{{ route('users.update') }}" enctype="multipart/form-data">
         @csrf
-         <div class="mb-3">
-        <label for="photo" class="form-label">Photo</label>
-        <input
-            type="file"
-            name="photo"
-            id="photo"
-            class="form-control"
-            accept="image/*"
-        >
+        <div class="mb-3">
+            <label for="photo" class="form-label">Photo</label>
+            <input type="file" name="photo" id="photo" class="form-control" accept="image/*">
 
-        @error('photo')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-     <button type="submit" class="btn btn-primary">
-        Atualizar
-    </button>
+            @error('photo')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <button type="submit" class="btn btn-primary">
+            Atualizar
+        </button>
         @method('PUT')
         <input type="hidden" name="id" value="{{ $user->id }}">
         <div class="mb-3">
@@ -49,8 +43,6 @@
             <input value="{{ $user->nif }}" name="nif" type="text" class="form-control" id="exampleInputEmail1"
                 aria-describedby="emailHelp">
         </div>
-
-
         <button type="submit" class="btn btn-primary">Actualizar</button>
     </form>
 @endsection
