@@ -10,13 +10,40 @@ class TaskController extends Controller
     public function allTasks()
     {
         $tasks = $this->getAllTasks();
-
         return view('tasks.all_tasks', compact('tasks'));
+    }
+
+    public function viewTask($id)
+    {
+        $task = DB::table('tasks')
+            ->join('users', 'tasks.user_id', '=', 'users.id')
+            ->select(
+                'tasks.*',
+                'users.name as user_name'
+            )
+            ->where('tasks.id', $id)
+            ->first();
+
+        if (!$task) {
+            abort(404, 'Task não encontrada');
+        }
+
+        return view('tasks.view_task', compact('task'));
+    }
+
+    public function deleteTask($id)
+    {
+        DB::table('tasks')
+            ->where('id', $id)
+            ->delete();
+
+        return redirect()->route('tasks.all')
+            ->with('success', 'Tarefa removida com sucesso');
     }
 
     protected function getAllTasks()
     {
-        $tasks = DB::table('tasks')
+        return DB::table('tasks')
             ->join('users', 'tasks.user_id', '=', 'users.id')
             ->select(
                 'tasks.id',
@@ -26,26 +53,31 @@ class TaskController extends Controller
                 'users.name as user_name'
             )
             ->get();
+    }
 
-        if ($tasks->isEmpty()) {
-            $tasks = collect([
-                (object) [
-                    'id' => 1,
-                    'name' => 'Preparar relatório mensal',
-                    'status' => true,
-                    'due_at' => '2025-12-31',
-                    'user_name' => 'Utilizador demo',
-                ],
-                (object) [
-                    'id' => 2,
-                    'name' => 'Rever documentação',
-                    'status' => false,
-                    'due_at' => '2025-12-28',
-                    'user_name' => 'Responsável a designar',
-                ],
-            ]);
-        }
+    //  MOSTRAR FORMULÁRIO
+    public function addTask()
+    {
+        $users = DB::table('users')->get();
+        return view('tasks.add_task', compact('users'));
+    }
 
-        return $tasks;
+    // GUARDAR TASK
+    public function storeTask(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:50',
+            'description' => 'required',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        DB::table('tasks')->insert([
+            'name' => $request->name,
+            'description' => $request->description,
+            'user_id' => $request->user_id,
+        ]);
+
+        return redirect()->route('tasks.all');
     }
 }
+

@@ -23,6 +23,9 @@ class User extends Authenticatable
         'password',
     ];
 
+    const USERADMIN_TYPE = 1;
+    const USERTEACHER_TYPE = 2;
+
     /**
      * The attributes that should be hidden for serialization.
      *
