@@ -1,4 +1,5 @@
 @extends('layouts.fe_master')
+<<<<<<< HEAD
 
 @section('content')
     <h2>Adicionar Tarefa</h2>
@@ -12,11 +13,16 @@
             </ul>
         </div>
     @endif
+=======
+@section('content')
+    <h4>Olá, aqui podes adicionar tarefas</h4>
+>>>>>>> bb68aaadd51a64ce755e1cdd1cb428a0faf8a1cb
 
     <form method="POST" action="{{ route('tasks.store') }}">
         @csrf
 
         <div class="mb-3">
+<<<<<<< HEAD
             <label for="taskName" class="form-label">Tarefa</label>
             <input required maxlength="50" type="text" name="name" id="taskName" class="form-control"
                 value="{{ old('name') }}">
@@ -52,3 +58,36 @@
         <a href="{{ route('tasks.all') }}" class="btn btn-secondary">Cancelar</a>
     </form>
 @endsection
+=======
+            <label for="exampleInputEmail1" class="form-label">Nome</label>
+            <input required name="name" type="text" class="form-control" id="exampleInputEmail1"
+                aria-describedby="emailHelp">
+        </div>
+        @error('name')
+            <p class="text-danger"> Erro de nome</p>
+        @enderror
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Descrição</label>
+            <input required name="description" type="text" class="form-control" id="exampleInputEmail1"
+                aria-describedby="emailHelp">
+        </div>
+        @error('description')
+            <p class="text-danger"> Erro de descrição</p>
+        @enderror
+
+        <select name="user_id" id="">
+            <option value="">Escolha User</option>
+            @foreach ($users as $user)
+                <option value="{{ $user->id}}">{{ $user->name}}</option>
+            @endforeach
+
+        </select> <br>
+        <br>
+        @error('password')
+            <p class="text-danger"> Erro de user</p>
+        @enderror
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+@endsection
+>>>>>>> bb68aaadd51a64ce755e1cdd1cb428a0faf8a1cb
